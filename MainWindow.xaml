@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pong"
         mc:Ignorable="d"
-        Title="Pong" Height="450" Width="800" ResizeMode="NoResize" KeyDown="Window_KeyDown">
+        Title="Pong" Height="450" Width="800" ResizeMode="NoResize" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
     <Canvas Margin="0" Background="Black">
         <Rectangle x:Name="player1" Fill="#FFF4F4F5" Height="30" Canvas.Left="10" Stroke="Black" Canvas.Top="201" Width="10"/>
         <Rectangle x:Name="player2" Fill="#FFF4F4F5" Height="30" Canvas.Left="772" Stroke="Black" Canvas.Top="201" Width="10"/>

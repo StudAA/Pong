@@ -20,7 +20,7 @@ namespace Pong
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static bool start = false, touch = false;
+        private static bool start = false, touch = false, pressUp, pressDown, pressW, pressS;
         private static Random rng = new Random();
         private static int score1 = 0, score2 = 0, x = 0, y = 0;
         private static double p1_radius, p2_radius;
@@ -118,24 +118,79 @@ namespace Pong
             {
                 Environment.Exit(0);
             }
+            if (e.Key == Key.Up)
+            {
+                pressUp = true;
+            }
+            if (e.Key == Key.Down)
+            {
+                pressDown = true;
+            }
+            if (e.Key == Key.W)
+            {
+                pressW = true;
+            }
+            if (e.Key == Key.S)
+            {
+                pressS = true;
+            }
             if (start)
             {
-                if (e.Key == Key.Up && Canvas.GetTop(player2) >= 15)
+                if (pressUp && pressW && Canvas.GetTop(player2) >= 15 && Canvas.GetTop(player1) >= 15)
+                {
+                    Canvas.SetTop(player2, Canvas.GetTop(player2) - 10);
+                    Canvas.SetTop(player1, Canvas.GetTop(player1) - 10);
+                }
+                else if (pressUp && pressS && Canvas.GetTop(player2) >= 15 && Canvas.GetTop(player1) <= 370)
+                {
+                    Canvas.SetTop(player2, Canvas.GetTop(player2) - 10);
+                    Canvas.SetTop(player1, Canvas.GetTop(player1) + 10);
+                }
+                else if (pressDown && pressW && Canvas.GetTop(player2) <= 370 && Canvas.GetTop(player1) >= 15)
+                {
+                    Canvas.SetTop(player2, Canvas.GetTop(player2) + 10);
+                    Canvas.SetTop(player1, Canvas.GetTop(player1) - 10);
+                }
+                else if (pressDown && pressS && Canvas.GetTop(player2) <= 370 && Canvas.GetTop(player1) <= 370)
+                {
+                    Canvas.SetTop(player2, Canvas.GetTop(player2) + 10);
+                    Canvas.SetTop(player1, Canvas.GetTop(player1) + 10);
+                }
+                else if (pressUp && Canvas.GetTop(player2) >= 15)
                 {
                     Canvas.SetTop(player2, Canvas.GetTop(player2) - 10);
                 }
-                else if (e.Key == Key.Down && Canvas.GetTop(player2) <= 370)
+                else if (pressDown && Canvas.GetTop(player2) <= 370)
                 {
                     Canvas.SetTop(player2, Canvas.GetTop(player2) + 10);
                 }
-                else if (e.Key == Key.W && Canvas.GetTop(player1) >= 15)
+                else if (pressW && Canvas.GetTop(player1) >= 15)
                 {
                     Canvas.SetTop(player1, Canvas.GetTop(player1) - 10);
                 }
-                else if (e.Key == Key.S && Canvas.GetTop(player1) <= 370)
+                else if (pressS && Canvas.GetTop(player1) <= 370)
                 {
                     Canvas.SetTop(player1, Canvas.GetTop(player1) + 10);
                 }
+            }
+        }
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Up)
+            {
+                pressUp = false;
+            }
+            if (e.Key == Key.Down)
+            {
+                pressDown = false;
+            }
+            if (e.Key == Key.W)
+            {
+                pressW = false;
+            }
+            if (e.Key == Key.S)
+            {
+                pressS = false;
             }
         }
     }
