@@ -22,6 +22,8 @@ namespace Pong
     {
         private static bool start = false, touch = false;
         private static Random rng = new Random();
+        private static int score1 = 0, score2 = 0, x = 0, y = 0;
+        private static double p1_radius, p2_radius;
 
         public MainWindow()
         {
@@ -34,64 +36,103 @@ namespace Pong
         {
             btn.Visibility = Visibility.Hidden;
             start = true;
-            switch (rng.Next(0, 4))
+            score_player1.Content = score1;
+            score_player2.Content = score2;
+            score_player1.Visibility = Visibility.Visible;
+            score_player2.Visibility = Visibility.Visible;
+            dots.Visibility = Visibility.Visible;
+            while (x == 0)
             {
-                case 0:
-                    while (!touch)
-                    {
-                        Canvas.SetTop(ball, Canvas.GetTop(ball) - 5);
-                        Canvas.SetLeft(ball, Canvas.GetLeft(ball) + 5);
-                        await Task.Delay(200);
-                        if (Canvas.GetTop(ball) <= 0) touch = true;
-                        if (Canvas.GetTop(ball) >= 421) touch = true;
-                    }
-                    break;
-                case 1:
-                    while (!touch)
-                    {
-                        Canvas.SetTop(ball, Canvas.GetTop(ball) - 5);
-                        Canvas.SetLeft(ball, Canvas.GetLeft(ball) - 5);
-                        await Task.Delay(200);
-                        if (Canvas.GetTop(ball) <= 0) touch = true;
-                    }
-                    break;
-                case 2:
-                    while (!touch)
-                    {
-                        Canvas.SetTop(ball, Canvas.GetTop(ball) + 5);
-                        Canvas.SetLeft(ball, Canvas.GetLeft(ball) + 5);
-                        await Task.Delay(200);
-                        if (Canvas.GetTop(ball) >= 421) touch = true;
-                    }
-                    break;
-                case 3:
-                    while (!touch)
-                    {
-                        Canvas.SetTop(ball, Canvas.GetTop(ball) + 5);
-                        Canvas.SetLeft(ball, Canvas.GetLeft(ball) - 5);
-                        await Task.Delay(200);
-                        if (Canvas.GetTop(ball) >= 421) touch = true;
-                    }
-                    break;
+                x = rng.Next(-5, 6);
+                y = rng.Next(-5, 6);
             }
+            while (!touch)
+            {
+                Canvas.SetTop(ball, Canvas.GetTop(ball) + y);
+                Canvas.SetLeft(ball, Canvas.GetLeft(ball) + x);
+                if (Canvas.GetLeft(ball) + 5 >= Canvas.GetLeft(player2) - 10)
+                {
+                    if (Canvas.GetTop(ball) >= Canvas.GetTop(player2) - 15 && Canvas.GetTop(ball) <= Canvas.GetTop(player2) + 15)
+                    {
+                        x = -x;
+                    }
+                    else if (Canvas.GetTop(ball) + 5 >= Canvas.GetTop(player2) - 15 && Canvas.GetTop(ball) <= Canvas.GetTop(player2) + 15)
+                    {
+                        x = -x;
+                    }
+                    else if (Canvas.GetTop(ball) - 5 >= Canvas.GetTop(player2) - 15 && Canvas.GetTop(ball) <= Canvas.GetTop(player2) + 15)
+                    {
+                        x = -x;
+                    }
+                }
+                if (Canvas.GetLeft(ball) - 5 <= Canvas.GetLeft(player1) + 10)
+                {
+                    if (Canvas.GetTop(ball) >= Canvas.GetTop(player1) - 15 && Canvas.GetTop(ball) <= Canvas.GetTop(player1) + 15)
+                    {
+                        x = -x;
+                    }
+                    else if (Canvas.GetTop(ball) + 5 >= Canvas.GetTop(player1) - 15 && Canvas.GetTop(ball) <= Canvas.GetTop(player1) + 15)
+                    {
+                        x = -x;
+                    }
+                    else if (Canvas.GetTop(ball) - 5 >= Canvas.GetTop(player1) - 15 && Canvas.GetTop(ball) <= Canvas.GetTop(player1) + 15)
+                    {
+                        x = -x;
+                    }
+                }
+                if (Canvas.GetTop(ball) <= 0)
+                {
+                    y = -y;
+                }
+                if (Canvas.GetTop(ball) >= 400)
+                {
+                    y = -y;
+                }
+                if (Canvas.GetLeft(ball) <= 0)
+                {
+                    touch = true;
+                    score2++;
+                    score_player2.Content = score2;
+                }
+                if (Canvas.GetLeft(ball) >= 780)
+                {
+                    touch = true;
+                    score1++;
+                    score_player1.Content = score1;
+                }
+                await Task.Delay(20);
+            }
+            start = false;
+            touch = false;
+            x = 0;
+            y = 0;
+            Canvas.SetLeft(ball, 389);
+            Canvas.SetTop(ball, 210);
+            Canvas.SetTop(player1, 201);
+            Canvas.SetTop(player2, 201);
+            btn.Visibility = Visibility.Visible; 
         }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Escape)
+            {
+                Environment.Exit(0);
+            }
             if (start)
             {
-                if (e.Key == Key.Up)
+                if (e.Key == Key.Up && Canvas.GetTop(player2) >= 15)
                 {
                     Canvas.SetTop(player2, Canvas.GetTop(player2) - 10);
                 }
-                if (e.Key == Key.Down)
+                else if (e.Key == Key.Down && Canvas.GetTop(player2) <= 370)
                 {
                     Canvas.SetTop(player2, Canvas.GetTop(player2) + 10);
                 }
-                if (e.Key == Key.W)
+                else if (e.Key == Key.W && Canvas.GetTop(player1) >= 15)
                 {
                     Canvas.SetTop(player1, Canvas.GetTop(player1) - 10);
                 }
-                if (e.Key == Key.S)
+                else if (e.Key == Key.S && Canvas.GetTop(player1) <= 370)
                 {
                     Canvas.SetTop(player1, Canvas.GetTop(player1) + 10);
                 }

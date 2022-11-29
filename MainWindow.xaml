@@ -11,5 +11,8 @@
         <Rectangle x:Name="player2" Fill="#FFF4F4F5" Height="30" Canvas.Left="772" Stroke="Black" Canvas.Top="201" Width="10"/>
         <Ellipse x:Name="ball" Fill="#FFF4F4F5" Height="10" Canvas.Left="389" Stroke="Black" Canvas.Top="210" Width="10"/>
         <Button x:Name="btn" Content="Play" Canvas.Left="355" Canvas.Top="315" Width="75" FontWeight="Bold" Click="btn_Click"/>
+        <Label x:Name="score_player1" Content="Label" Canvas.Left="339" Canvas.Top="20" Foreground="White" FontWeight="Bold" FontSize="20" Margin="0" Visibility="Hidden"/>
+        <Label x:Name="score_player2" Content="Label" Canvas.Left="439" Canvas.Top="20" Foreground="White" FontWeight="Bold" FontSize="20" Margin="0" Visibility="Hidden"/>
+        <Label x:Name="dots" Content=":" Canvas.Left="389" Canvas.Top="20" Foreground="White" FontWeight="Bold" FontSize="20" Visibility="Hidden"/>
     </Canvas>
 </Window>
