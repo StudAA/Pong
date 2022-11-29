@@ -23,7 +23,6 @@ namespace Pong
         private static bool start = false, touch = false, pressUp, pressDown, pressW, pressS;
         private static Random rng = new Random();
         private static int score1 = 0, score2 = 0, x = 0, y = 0;
-        private static double p1_radius, p2_radius;
 
         public MainWindow()
         {
